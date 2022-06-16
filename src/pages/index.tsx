@@ -5,7 +5,7 @@ import { stripe } from '../services/stripe';
 import styles from './home.module.scss'
 
 interface HomeProps{
-  product:{
+  product?:{
     priceId: string,
     amount: number
   }
@@ -24,10 +24,7 @@ export default function Home({product}:HomeProps) {
           <p>
             Get access to all the publications <br/>
             <span> for {
-              !product &&'testing'|| new Intl.NumberFormat("en-US",{
-                style:'currency',
-                currency: 'USD'
-              }).format(product.amount)
+              !product &&'testing'
               } month</span>
           </p>
          <SubscribeButton />
@@ -39,23 +36,3 @@ export default function Home({product}:HomeProps) {
 }
 
 // getStaticProps: GetStaticProps ou getServerSideProps:GetServerSideProps
-export const getServerSideProps: GetServerSideProps = async() =>{
- try{ 
-  const price = await stripe.prices.retrieve("price_1Km0A3HUBGnwpr0SN5DWqwJO",{
-    expand: ['product']
-  })
-  const product ={
-    priceId: price.id,
-    amount: price.unit_amount/100,
-  }
-
-  return {
-    props:{
-      product ,},
-      // revalidate: 60 * 60 * 24 //24 hours
-  }
-} catch(err)
-  {console.log(err)}
-
-  
-}
