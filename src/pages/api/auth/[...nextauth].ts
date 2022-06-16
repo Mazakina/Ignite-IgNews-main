@@ -13,6 +13,7 @@ export default NextAuth({
       authorization: {
         params: {
           scope: 'read:user',
+          NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         },
       },
     // ...add more providers here
