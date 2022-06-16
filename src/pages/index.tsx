@@ -23,10 +23,12 @@ export default function Home({product}:HomeProps) {
           <h1>News About <br/>the <span>React</span> world.</h1>
           <p>
             Get access to all the publications <br/>
-            <span> for {new Intl.NumberFormat("en-US",{
-              style:'currency',
-              currency: 'USD'
-            }).format(product.amount)} month</span>
+            <span> for {
+              !product &&'testing'|| new Intl.NumberFormat("en-US",{
+                style:'currency',
+                currency: 'USD'
+              }).format(product.amount)
+              } month</span>
           </p>
          <SubscribeButton />
         </section>
